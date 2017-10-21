@@ -37,6 +37,7 @@ jet_fuel = "Jet Fuel"
 kerosene = "Kerosene"
 lubricants = "Lubricants"
 motor_gasoline = "Motor Gasoline, Excluding Ethanol"
+total = "Total Energy"
 
 emissions = pd.read_csv("emissions_by_source_73_17.csv")
 sandp = pd.read_csv("^GSPC.csv")
@@ -45,23 +46,35 @@ q = 500
 coal = kalman_filter(4, .001, q, emissions.get(coal))
 natural_gas = kalman_filter(4, .001, q, emissions.get(natural_gas))
 distillate = kalman_filter(4, .001, q, emissions.get(distillate))
-hydrocarbon = kalman_filter(4, .001, q, emissions.get(hydrocarbon))
+# hydrocarbon = kalman_filter(4, .001, q, emissions.get(hydrocarbon))
 jet_fuel = kalman_filter(4, .001, q, emissions.get(jet_fuel))
-motor_gasoline = kalman_filter(4, .001, q, emissions.get(motor_gasoline))
-sp = kalman_filter(4, .001, q, sandp.get("Adj Close")) #/ np.max(sandp.get("Adj Close"))
+total = kalman_filter(4, .001, q, emissions.get(total))
+# motor_gasoline = kalman_filter(4, .001, q, emissions.get(motor_gasoline))
+sp = kalman_filter(4, .001, q, sandp.get("Adj Close")/10) #/ np.max(sandp.get("Adj Close"))
 #kerosene = kalman_filter(4, .001, q, emissions.get(kerosene))
 #aviation = kalman_filter(4, .001, q, emissions.get(aviation))
 #lubricants = kalman_filter(4, .001, q, emissions.get(lubricants))
 
+
+def percentChange(a) :
+    max = np.max(a)
+    for x in range(0,len(a)):
+        a[x] = (a[x] / max)
+
+percentChange(coal)
+percentChange(natural_gas)
+percentChange(distillate)
+percentChange(total)
+percentChange(jet_fuel)
+percentChange(sp)
+
+
 ab, =plt.plot(coal,label="Coal")
 ac, =plt.plot(natural_gas,label="Natural Gas")
-#ad, =plt.plot(aviation,label="Aviation")
+
+ad, =plt.plot(total,label="Total Energy")
 ae, =plt.plot(distillate,label="Distillate Fuel Oil")
-#af, =plt.plot(hydrocarbon,label="Hydrocarbon Liquids")
 ag, =plt.plot(jet_fuel,label="Jet_Fuel")
-#ah, =plt.plot(kerosene,label="Kerosene")
-#ai, =plt.plot(lubricants,label="Lubricants")
-aj, =plt.plot(motor_gasoline,label="Motor Gasoline")
 ak, =plt.plot(sp, label="S&P 500")
-plt.legend(handles=[ab, ac, ae, ag, ak])
+plt.legend(handles=[ab, ac, ad, ae, ag, ak])
 plt.show()
