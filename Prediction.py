@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from statsmodels.tsa.arima_model import ARIMA
-
+import numpy
 
 
 # create a differenced series
@@ -16,17 +16,8 @@ def difference(dataset, interval=1):
 def inverse_difference(history, yhat, interval=1):
 	return yhat + history[-interval]
 
-from pandas import Series
-from statsmodels.tsa.arima_model import ARIMA
-import numpy
 
-# create a differenced series
-def difference(dataset, interval=1):
-	diff = list()
-	for i in range(interval, len(dataset)):
-		value = dataset[i] - dataset[i - interval]
-		diff.append(value)
-	return numpy.array(diff)
+
 
 
 def predict(dataSeries):
@@ -38,7 +29,7 @@ def predict(dataSeries):
     days_in_year = 365
     differenced = difference(X, days_in_year)
     # fit model
-    model = ARIMA(differenced, order=(7,1,5))
+    model = ARIMA(differenced, order=(7, 1, 5))
     model_fit = model.fit(disp=0)
     # print summary of fit model
     print(model_fit.summary())
