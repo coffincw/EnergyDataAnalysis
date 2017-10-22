@@ -2,6 +2,21 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import Prediction
+from matplotlib.widgets import Button
+
+class Index(object) :
+    i = 0
+
+    def next(self, event):
+        plt.gcf().clear()
+        plt.gcf().canvas.set_window_title("Data conclusion")
+        plt.gcf().text(.005, .715, "There are a few important conclusions that we can draw from the data\n\n"
+                                  "     1. Total Energy emmisions doesnt look to be decreasing at a rapid enough rate to be\n"
+                                   "         considered a trend.\n"
+                                  "     2. In the past C02 Emmisions have generally correlated with S&P 500 data\n"
+                                  "     3. While coal used to to be very closely correlated with S&P 500, after 2003,\n"
+                                   "         it now seems to be on a steep decline while the economy continues to increase\n")
+
 def kalman_filter(process_variance, state_var,  # R, P
                   process_noise,  # Q
                   noisy_measurement):
@@ -82,6 +97,10 @@ plt.axes().set_xlabel("Months since 1973")
 plt.axes().set_ylabel("Percent change")
 plt.title("Predicting C02 Emmisions/S&P 500")
 plt.gcf().canvas.set_window_title('Energy and Economy Predictions')
-
 plt.legend(handles=[ab, ac, ae, ag, ad, ak, az, sk])
+callback = Index()
+axnext = plt.axes([0.7718, 0.115, 0.125, 0.075])
+bnext = Button(axnext,'Conclusion')
+bnext.on_clicked(callback.next)
+
 plt.show()
