@@ -32,13 +32,13 @@ def difference(dataset, interval=1):
 def predict(dataSeries):
     # load dataset
     # series = Series.from_csv('dataset.csv', header=None)
-    series = dataSeries
+    #series = dataSeries
     # seasonal difference
-    X = series.values
+    X = dataSeries
     days_in_year = 365
     differenced = difference(X, days_in_year)
     # fit model
-    model = ARIMA(differenced, order=(7,0,1))
+    model = ARIMA(differenced, order=(7,1,5))
     model_fit = model.fit(disp=0)
     # print summary of fit model
     print(model_fit.summary())
@@ -47,7 +47,7 @@ def predict(dataSeries):
 
     forecast = model_fit.forecast(steps=120)[0]
     history = [x for x in X]
-    predict = []
+    predict = [history[-1]]
     day = 1
     for yhat in forecast:
         inverted = inverse_difference(history, yhat, days_in_year)

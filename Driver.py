@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-
+import Prediction
 def kalman_filter(process_variance, state_var,  # R, P
                   process_noise,  # Q
                   noisy_measurement):
@@ -69,15 +69,15 @@ percentChange(jet_fuel)
 percentChange(sp)
 
 
-ab, =plt.plot(coal,label="Coal")
-ac, =plt.plot(natural_gas,label="Natural Gas")
-
+#ab, =plt.plot(coal,label="Coal")
+#ac, =plt.plot(natural_gas,label="Natural Gas")
 ad, =plt.plot(total,label="Total Energy")
-ae, =plt.plot(distillate,label="Distillate Fuel Oil")
-ag, =plt.plot(jet_fuel,label="Jet_Fuel")
-ak, =plt.plot(sp, label="S&P 500")
+#ae, =plt.plot(distillate,label="Distillate Fuel Oil")
+#ag, =plt.plot(jet_fuel,label="Jet_Fuel")
+#ak, =plt.plot(sp, label="S&P 500")
+az, =plt.plot(range(533, 654), Prediction.predict(total), label="Predicted Total")
 plt.axes().set_xlabel("Months since 1973")
 plt.axes().set_ylabel("Percent change")
 plt.title("Predicting C02 Emmisions/S&P 500")
-plt.legend(handles=[ab, ac, ad, ae, ag, ak])
+#plt.legend(handles=[ab, ac, ad, ae, ag, ak, az])
 plt.show()
