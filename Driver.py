@@ -11,11 +11,11 @@ class Index(object) :
         plt.gcf().clear()
         plt.gcf().canvas.set_window_title("Data conclusion")
         plt.gcf().text(.005, .715, "There are a few important conclusions that we can draw from the data\n\n"
-                                  "     1. Total Energy emmisions doesnt look to be decreasing at a rapid enough rate to be\n"
+                                  "     1. Total Energy emmisions don't appear to be decreasing at a rapid enough rate to be\n"
                                    "         considered a trend.\n"
-                                  "     2. In the past C02 Emmisions have generally correlated with S&P 500 data\n"
-                                  "     3. While coal used to to be very closely correlated with S&P 500, after 2003,\n"
-                                   "         it now seems to be on a steep decline while the economy continues to increase\n")
+                                  "     2. In the past CO2 emmisions have gernally correlated with S&P 500.\n"
+                                  "     3. While coal used to be very closely correlated with the S&P 500, after 2003,\n"
+                                   "          it now seems to be on a steep decline while the S&P index continues to increase.\n")
 
 def kalman_filter(process_variance, state_var,  # R, P
                   process_noise,  # Q
